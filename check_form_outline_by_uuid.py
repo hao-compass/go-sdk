@@ -171,7 +171,8 @@ def main(form_uuid):  # type: ignore
         print("=" * 80)
         print(f"\nTotal fields: {len(result_dict.keys())}")
         print("\nField list:")
-        for i, key in enumerate(sorted(result_dict.keys()), 1):
+
+        '''for i, key in enumerate(sorted(result_dict.keys()), 1):
             value = result_dict[key]
             value_type = type(value).__name__
 
@@ -185,21 +186,24 @@ def main(form_uuid):  # type: ignore
             else:
                 summary = str(value)
 
-            print(f"  {i:2d}. {key:<30} ({value_type}): {summary}")
+            print(f"  {i:2d}. {key:<30} ({value_type}): {summary}")'''
 
         # Optional: Export full JSON
         if dict_term_count > 0:
             print(f"\n" + "=" * 80)
             print("FORM OUTLINE JSON STRUCTURE")
             print("=" * 80)
-            outline_json = json.dumps(outline_data, indent=2)
 
-            if len(outline_json) > 3000:
+            outline_json = json.dumps(outline_data, indent=2)
+            print("--- Skip print of full outline JSON to avoid overload ---")
+
+            '''if len(outline_json) > 3000:
                 print(outline_json[:3000])
                 print(f"\n... (truncated, total: {len(outline_json)} chars)")
                 print(f"\nTo see full outline, modify the script or export to file")
             else:
                 print(outline_json)
+            '''
 
     except services.NotFoundError as e:
         print(f"\n✗ ERROR: Form not found!")
