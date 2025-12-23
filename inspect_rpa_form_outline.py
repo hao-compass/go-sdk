@@ -1,6 +1,5 @@
 import json
 import logging
-from typing import Dict, List, Optional
 
 from shovel import task
 
@@ -16,7 +15,7 @@ RPA_FORM_SERIES_ID = '829'
 OUTLINE_PATH_TEMPLATE = '/code/web/flows/handlers/app/rpa/outline{}.json'
 
 
-def _load_outline_version(version: str) -> Optional[reform_pb2.FormOutline]:
+def _load_outline_version(version):
     """Load an outline version from JSON file."""
     if version == '0':
         return reform_pb2.FormOutline()
@@ -32,7 +31,7 @@ def _load_outline_version(version: str) -> Optional[reform_pb2.FormOutline]:
         return None
 
 
-def _compare_outlines(current: reform_pb2.FormOutline, version: str, version_outline: reform_pb2.FormOutline) -> Dict:
+def _compare_outlines(current, version, version_outline):
     """Compare current outline with a specific version."""
     result = {
         'version': version,
@@ -52,7 +51,7 @@ def _compare_outlines(current: reform_pb2.FormOutline, version: str, version_out
     return result
 
 
-def _get_outline_summary(outline: reform_pb2.FormOutline) -> Dict:
+def _get_outline_summary(outline):
     """Get summary information about an outline."""
     if not outline or not outline.terms:
         return {
@@ -92,7 +91,7 @@ def _get_outline_summary(outline: reform_pb2.FormOutline) -> Dict:
 
 
 @task
-def main(form_series_id: Optional[str] = None, form_id: Optional[str] = None) -> None:
+def main(form_series_id=None, form_id=None):  # type: ignore
     """
     Inspect the current RPA form outline deployment status.
 
