@@ -107,7 +107,7 @@ def main(form_uuid):  # type: ignore
                 print(f"\nForm '{form.title}' has {dict_term_count} top-level outline terms.")
                 print("\nTop-level sections:")
 
-                for i, term in enumerate(outline_data.get('terms', [])[:10], 1):
+                for i, term in enumerate(outline_data.get('terms', [])[:5], 1):
                     term_kind = term.get('kind', 'UNKNOWN')
                     term_title = term.get('title', 'Untitled')
                     term_number = term.get('number', '')
@@ -122,8 +122,8 @@ def main(form_uuid):  # type: ignore
                     nested_info = f" ({nested_count} sub-terms)" if nested_count > 0 else ""
                     print(f"  {term_number}. {term_title} [{term_kind}]{nested_info}")
 
-                if dict_term_count > 10:
-                    print(f"  ... and {dict_term_count - 10} more terms")
+                if dict_term_count > 5:
+                    print(f"  ... and {dict_term_count - 5} more terms")
 
                 # Show sample field IDs
                 first_term = outline_data.get('terms', [{}])[0]
@@ -132,12 +132,12 @@ def main(form_uuid):  # type: ignore
                     for key, value in list(first_term['fieldIds'].items())[:3]:
                         print(f"  '{key}': '{value}'")
 
-                print("\n" + "-" * 80)
+                '''print("\n" + "-" * 80)
                 print("NEXT STEPS:")
                 print("-" * 80)
                 print("✓ Backend is correctly returning form_outline")
                 print("✓ Check if LaunchDarkly 'form_outline' flag is enabled")
-                print("✓ Check frontend FormOutline component rendering")
+                print("✓ Check frontend FormOutline component rendering")'''
 
             else:
                 print("\n" + "=" * 80)
@@ -166,13 +166,13 @@ def main(form_uuid):  # type: ignore
                 print("The fill_config does not contain outline data.")
 
         # Show top-level fields in response
-        print(f"\n" + "=" * 80)
+        '''print(f"\n" + "=" * 80)
         print(f"TOP-LEVEL FIELDS IN API RESPONSE")
         print("=" * 80)
         print(f"\nTotal fields: {len(result_dict.keys())}")
         print("\nField list:")
 
-        '''for i, key in enumerate(sorted(result_dict.keys()), 1):
+        for i, key in enumerate(sorted(result_dict.keys()), 1):
             value = result_dict[key]
             value_type = type(value).__name__
 
@@ -186,7 +186,7 @@ def main(form_uuid):  # type: ignore
             else:
                 summary = str(value)
 
-            print(f"  {i:2d}. {key:<30} ({value_type}): {summary}")'''
+            print(f"  {i:2d}. {key:<30} ({value_type}): {summary}")
 
         # Optional: Export full JSON
         if dict_term_count > 0:
@@ -197,13 +197,13 @@ def main(form_uuid):  # type: ignore
             outline_json = json.dumps(outline_data, indent=2)
             print("--- Skip print of full outline JSON to avoid overload ---")
 
-            '''if len(outline_json) > 3000:
+            if len(outline_json) > 3000:
                 print(outline_json[:3000])
                 print(f"\n... (truncated, total: {len(outline_json)} chars)")
                 print(f"\nTo see full outline, modify the script or export to file")
             else:
                 print(outline_json)
-            '''
+        '''
 
     except services.NotFoundError as e:
         print(f"\n✗ ERROR: Form not found!")
